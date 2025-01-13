@@ -302,4 +302,24 @@ img{
 
     opacity: 1;
   }
+  .fade-away-text-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+  }
+  .test-text{
+    font-size: 100px;
+    position: relative;
+    z-index: -1;
+  }
+
+  .cube-text {
+    background-color: black;
+    position: relative; 
+    z-index: 1;
+  }
   
+  .opacity {
+    opacity: 1; 
+  }
