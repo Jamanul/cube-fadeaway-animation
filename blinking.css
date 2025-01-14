@@ -44,22 +44,15 @@
   .blinking-european-text {
     font-size: 100px;
   }
-  @keyframes fillText {
-    0% {
-      color: transparent; 
-      -webkit-text-stroke: 1px gray; 
-      opacity: 1; 
-    }
-    100% {
-      color: white; /* it will always make the color 80% opcity for webkit*/
-      -webkit-text-stroke: 0px ; 
-      opacity: 1; 
-    }
-  }
+
 
   .border-text {
     font-size: 100px;
     text-align: center;
-    animation: fillText 2s steps(2) infinite; 
+    color: transparent; 
+    -webkit-text-stroke: 1px white; 
+  }
+  .border-text-border{
+    color: white;
   }
 

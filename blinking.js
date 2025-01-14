@@ -29,3 +29,13 @@ const blickingLight = () => {
     }
     isFirstText = !isFirstText;
   }, 800); 
+
+  function toggleBorderClass() {
+    const textElement = document.querySelector('.border-text');
+    
+    setInterval(() => {
+      textElement.classList.toggle('border-text-border');
+    }, 1000); // Toggle the class every 2 seconds
+  }
+
+  toggleBorderClass(); 
