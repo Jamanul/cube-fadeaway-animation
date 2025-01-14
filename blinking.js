@@ -25,7 +25,7 @@ const blickingLight = () => {
     if (isFirstText) {
       textElement.textContent = "TRONICA MONO";
     } else {
-      textElement.textContent = "TRÖNİÇA MÖNØ";
+      textElement.textContent = "ŦRÖNİÇA MÖNØ";
     }
     isFirstText = !isFirstText;
   }, 800); 
