@@ -402,9 +402,6 @@ document.addEventListener("DOMContentLoaded", () => {
          resetCubes(); // Initially create cubes
     loopCubes(); // Start the loop
     }
-   
-  
- 
   });
   
   
