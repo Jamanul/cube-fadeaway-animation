@@ -43,18 +43,23 @@
   
   .blinking-european-text {
     font-size: 100px;
-    animation: switch 4s infinite;
   }
-
-
-
-  @keyframes switch {
+  @keyframes fillText {
     0% {
-      content: "TRÖNİÇA MÖNØ";
+      color: transparent; 
+      -webkit-text-stroke: 1px gray; 
+      opacity: 1; 
     }
     100% {
-      content: "TRONICA MONO";
+      color: white; /* it will always make the color 80% opcity for webkit*/
+      -webkit-text-stroke: 0px ; 
+      opacity: 1; 
     }
   }
 
+  .border-text {
+    font-size: 100px;
+    text-align: center;
+    animation: fillText 2s steps(2) infinite; 
+  }
 
