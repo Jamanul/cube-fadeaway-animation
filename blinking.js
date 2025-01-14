@@ -17,3 +17,15 @@ const blickingLight = () => {
   };
   
   blickingLight();
+
+  const textElement = document.getElementById('blinking-text');
+  let isFirstText = true;
+
+  setInterval(() => {
+    if (isFirstText) {
+      textElement.textContent = "TRONICA MONO";
+    } else {
+      textElement.textContent = "TRÖNİÇA MÖNØ";
+    }
+    isFirstText = !isFirstText;
+  }, 800); 
