@@ -3,68 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Animation</title>
-  </head>
-  <body>
-    <main>
-      <div class="text-container">
-        <span class="text-part left"
-          >FU<span class="angle">&#8594;</span>URE</span
-        >
-        <span class="text-part right"
-          >FU<span class="angle">&#8594;</span>URE</span
-        >
-        <br />
-        <span class="text-part center"
-          >M<span class="angle-two">&#8592;</span>MORY</span
-        >
-        <span class="text-part left">LAB</span>
-        <span class="text-part right">LAB</span>
-      </div>
-    </main>
+    <title>GSAP Scroll Animation</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        height: 200vh; /* To allow scrolling */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+      }
+      .text {
+        font-size: 2rem;
+        font-weight: bold;
+        color: black;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box"></div>
+      <div class="text">Hello, World!</div>
+    </div>
 
     <script>
-      // Initialize Lenis
-      const lenis = new Lenis({
-        smooth: true, // Enable smooth scrolling
-        duration: 1.2, // Scrolling duration
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing function
-      });
+      // Initialize GSAP
+      gsap.registerPlugin(ScrollTrigger);
 
-      // Animation frame loop to keep Lenis running
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
-
-      // Register GSAP ScrollTrigger with Lenis
-      lenis.on("scroll", ScrollTrigger.update);
-
-      // GSAP Animation
+      // Move the box up, then left, and show text
       gsap
         .timeline({
           scrollTrigger: {
-            trigger: ".text-container",
-            start: "top 50%", // Start when the container enters the viewport
-            end: "top 20%", // End when the container moves further
-            scrub: 0.5, // Adds a slight delay to the scrub for smoothness
+            trigger: ".container",
+            start: "top center", // Start animation when container is in the center
+            end: "bottom center", // End animation before container exits
+            scrub: true, // Smooth animation on scroll
           },
         })
-        .to(".right", {
-          x: "40%",
-          duration: 1.5, // Increases the duration for a smoother effect
-          ease: "power3.out", // A slower easing curve for a smoother start and stop
-        })
-        .to(".right", {
-          x: "0%",
-          duration: 1.5, // Matches the duration of the first animation
-          ease: "power3.in", // Complements the "out" easing for smooth return
-        });
+        .to(".box", { y: -200, duration: 1 }) // Move the box up
+        .to(".box", { x: -200, duration: 1 }) // Move the box to the left
+        .to(".text", { opacity: 1, duration: 1 }); // Make the text appear
     </script>
   </body>
 </html>

@@ -161,3 +161,49 @@ document.addEventListener("DOMContentLoaded", () => {
     divideIntoCubesLoop(textElement, 32);
   });
   
+
+  //text container
+
+  function controlAnimation() {
+    const textParts = document.querySelectorAll('.text-part'); // Select all text parts
+  
+    const resetStyles = () => {
+      textParts.forEach(part => {
+        // Remove animation properties
+        part.style.animation = 'none';
+  
+        // Reset position for elements with left-3 or other classes
+        if (part.classList.contains('left')) {
+          part.style.clipPath = 'inset(0% 0% 50% 0%)';
+          part.style.transform = 'none';
+          part.style.scale = 2;
+        }
+        if (part.classList.contains('right') || part.classList.contains('right-two')) {
+          part.style.clipPath = 'inset(50% 0% 0% 0%)';
+          part.style.transform = 'none';
+          part.style.scale = 2;
+        }
+  
+        // Remove data-text attribute
+        part.removeAttribute('data-text');
+      });
+  
+      // Disable pseudo-element animations, reset left, and remove text shadow
+      const style = document.createElement('style');
+      style.textContent = `
+        .text-part::before, .text-part::after {
+          animation: none !important;
+          left: 0 !important;
+          text-shadow: none !important;
+          content: none !important;
+        }
+      `;
+      document.head.appendChild(style);
+    };
+  
+    // Stop animations after 5 seconds
+    setTimeout(resetStyles, 5000);
+  }
+  
+  controlAnimation();
+  

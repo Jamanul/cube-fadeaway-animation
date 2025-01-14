@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'MyCustomFont'; /* Name your font */
+    src: url('fonts/Tronica-Mono.ttf') format('truetype'),
+         url('fonts/Tronica-Mono.otf') format('opentype');
+    font-weight: normal; 
+    font-style: normal; 
+  }
+  
+
+  body {
+    font-family: 'MyCustomFont', sans-serif;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
+
+  .arrow{
+    font-size: 150px;
+    color: gray;
+  }
+  
+  .red-arrow {
+    color:tomato;
+  }
+  
+
