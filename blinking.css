@@ -55,7 +55,12 @@
   .border-text-border{
     color: white;
   }
-
+  .earth-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
   .earth {
     position: relative;
     width: 700px;  /* Size of the Earth container */
@@ -66,7 +71,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;  /* Ensure no overflow of content outside the circle */
+   
   }
   
   .green-layer {
@@ -80,19 +85,17 @@
     justify-content: center;
     align-items: center;
     pointer-events: none;  /* Prevent the green-layer from interfering with the text */
-    overflow: hidden;  /* Hide the overflow */
   }
   
   .cube {
     position: absolute;
     transition: opacity 0.5s ease;  /* Smooth fade-out transition */
   }
-  
   .text-overlay {
     position: absolute;
     color: white;  /* Text color */
-    font-size: 64px;  /* Text size */
+    font-size: 100px;  /* Text size */
     font-weight: bold;  /* Text boldness */
-    z-index: 1;  /* Ensure text appears above other elements */
+    z-index: 1;  
   }
   
