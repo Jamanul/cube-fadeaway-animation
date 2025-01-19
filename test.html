@@ -39,7 +39,6 @@
         background-size: inherit;
         background-repeat: no-repeat;
         background-position: inherit;
-        clip-path: none;
         opacity: 0.8;
         pointer-events: none;
       }
@@ -64,6 +63,8 @@
     </main>
     <script>
       const glitchContainer = document.querySelector(".glitch");
+      const glitchWidth = 600; // Width of the image
+      const glitchHeight = 400; // Height of the image
       const count = 20; // Number of glitch fragments
 
       // Create glitch fragments
@@ -71,8 +72,9 @@
         const glitchBox = document.createElement("div");
         glitchBox.classList.add("glitch__box");
 
-        const randomX = Math.random() * 570; // Random x position within the container width
-        const randomY = Math.random() * 390; // Random y position within the container height
+        // Random position within the image bounds
+        const randomX = Math.random() * (glitchWidth - 60); // 60 is the width of the glitch box
+        const randomY = Math.random() * (glitchHeight - 20); // 20 is the height of the glitch box
 
         // Position the glitch fragment
         glitchBox.style.left = `${randomX}px`;
@@ -94,7 +96,7 @@
           // Apply translation for the glitch effect
           box.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
         });
-      }, 200);
+      }, 300);
     </script>
   </body>
 </html>
