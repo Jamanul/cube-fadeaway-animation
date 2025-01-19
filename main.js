@@ -104,29 +104,31 @@ document.addEventListener("DOMContentLoaded", () => {
         let index = 0;
   
         const interval = setInterval(() => {
-          if (index >= cubePositions.length) {
-            clearInterval(interval); // Stop adding cubes
-            setTimeout(removeCubes, 1000); // Wait 2 seconds before removing cubes
-            return;
+          // Add 5 cubes at a time for faster effect
+          const batchSize = 40;
+          const endIndex = Math.min(index + batchSize, cubePositions.length);
+  
+          for (let i = index; i < endIndex; i++) {
+            const { row, col } = cubePositions[i];
+            const cube = document.createElement("div");
+            cube.classList.add("cube-text"); // Add a 'cube-text' class
+            cube.style.width = `${cubeSize}px`;
+            cube.style.height = `${cubeSize}px`;
+            cube.style.position = "absolute";
+            cube.style.left = `${col * cubeSize}px`;
+            cube.style.top = `${row * cubeSize}px`;
+            cube.style.backgroundColor = "rgba(0, 0, 0)"; // Optional: Cube color
+  
+            // Append the cube to the element
+            element.appendChild(cube);
           }
   
-          const { row, col } = cubePositions[index];
-          const cube = document.createElement("div");
-          cube.classList.add("cube-text"); // Add a 'cube-text' class
-          cube.style.width = `${cubeSize}px`;
-          cube.style.height = `${cubeSize}px`;
-          cube.style.position = "absolute";
-          cube.style.left = `${col * cubeSize}px`;
-          cube.style.top = `${row * cubeSize}px`;
-          cube.style.backgroundColor = "rgba(0, 0, 0)"; // Optional: Cube color
-  
-          console.log(`Cube added at row ${row + 1}, col ${col + 1}`);
-  
-          // Append the cube to the element
-          element.appendChild(cube);
-  
-          index++;
-        }, 0); // Small delay between adding cubes
+          index = endIndex;
+          if (index >= cubePositions.length) {
+            clearInterval(interval); // Stop adding cubes
+            setTimeout(removeCubes, 500); // Wait 0.5 seconds before removing cubes
+          }
+        }, 50); // Small delay between adding cubes (50ms for faster animation)
       }
   
       // Function to remove cubes randomly
@@ -136,18 +138,22 @@ document.addEventListener("DOMContentLoaded", () => {
         let index = 0;
   
         const interval = setInterval(() => {
-          if (index >= cubes.length) {
-            clearInterval(interval); // Stop removing cubes
-            setTimeout(addCubes, 1000); // Wait 2 seconds before adding cubes again
-            return;
+          // Remove 5 cubes at a time for faster effect
+          const batchSize = 40;
+          const endIndex = Math.min(index + batchSize, cubes.length);
+  
+          for (let i = index; i < endIndex; i++) {
+            const cube = cubes[i];
+            console.log(`Removing cube at position ${i}`);
+            cube.remove();
           }
   
-          const cube = cubes[index];
-          console.log(`Removing cube at position ${index}`);
-          cube.remove();
-  
-          index++;
-        }, 0); // Small delay between removing cubes
+          index = endIndex;
+          if (index >= cubes.length) {
+            clearInterval(interval); // Stop removing cubes
+            setTimeout(addCubes, 500); // Wait 0.5 seconds before adding cubes again
+          }
+        }, 50); // Small delay between removing cubes (50ms for faster animation)
       }
   
       addCubes(); // Start the loop
@@ -164,46 +170,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //text container
 
-  function controlAnimation() {
-    const textParts = document.querySelectorAll('.text-part'); // Select all text parts
+  // function controlAnimation() {
+  //   const textParts = document.querySelectorAll('.text-part'); // Select all text parts
   
-    const resetStyles = () => {
-      textParts.forEach(part => {
-        // Remove animation properties
-        part.style.animation = 'none';
+  //   const resetStyles = () => {
+  //     textParts.forEach(part => {
+  //       // Remove animation properties
+  //       part.style.animation = 'none';
   
-        // Reset position for elements with left-3 or other classes
-        if (part.classList.contains('left')) {
-          part.style.clipPath = 'inset(0% 0% 50% 0%)';
-          part.style.transform = 'none';
-          part.style.scale = 2;
-        }
-        if (part.classList.contains('right') || part.classList.contains('right-two')) {
-          part.style.clipPath = 'inset(50% 0% 0% 0%)';
-          part.style.transform = 'none';
-          part.style.scale = 2;
-        }
+  //       // Reset position for elements with left-3 or other classes
+  //       if (part.classList.contains('left')) {
+  //         part.style.clipPath = 'inset(0% 0% 50% 0%)';
+  //         part.style.transform = 'none';
+  //         part.style.scale = 2;
+  //       }
+  //       if (part.classList.contains('right') || part.classList.contains('right-two')) {
+  //         part.style.clipPath = 'inset(50% 0% 0% 0%)';
+  //         part.style.transform = 'none';
+  //         part.style.scale = 2;
+  //       }
   
-        // Remove data-text attribute
-        part.removeAttribute('data-text');
-      });
+  //       // Remove data-text attribute
+  //       part.removeAttribute('data-text');
+  //     });
   
-      // Disable pseudo-element animations, reset left, and remove text shadow
-      const style = document.createElement('style');
-      style.textContent = `
-        .text-part::before, .text-part::after {
-          animation: none !important;
-          left: 0 !important;
-          text-shadow: none !important;
-          content: none !important;
-        }
-      `;
-      document.head.appendChild(style);
-    };
+  //     // Disable pseudo-element animations, reset left, and remove text shadow
+  //     const style = document.createElement('style');
+  //     style.textContent = `
+  //       .text-part::before, .text-part::after {
+  //         animation: none !important;
+  //         left: 0 !important;
+  //         text-shadow: none !important;
+  //         content: none !important;
+  //       }
+  //     `;
+  //     document.head.appendChild(style);
+  //   };
   
-    // Stop animations after 5 seconds
-    setTimeout(resetStyles, 5000);
-  }
+  //   // Stop animations after 5 seconds
+  //   setTimeout(resetStyles, 5000);
+  // }
   
   controlAnimation();
   
