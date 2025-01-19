@@ -24,24 +24,26 @@
       .glitch {
         position: relative;
         width: 600px;
-        height: 400px;
+        height: 600px; /* Changed to square to create a circular effect */
         background-image: url("./images/full-earth.svg");
-        background-size: 600px 400px; /* Matches container size */
+        background-size: 600px 600px; /* Matches container size */
         background-repeat: no-repeat;
         background-position: center;
         overflow: hidden;
+        border-radius: 50%; /* Makes the container circular */
       }
 
       .glitch__box {
         position: absolute;
-        width: 60px; /* Increased width */
-        height: 20px;
+        width: 80px; /* Increased width */
+        height: 30px; /* Increased height */
         background-image: inherit;
         background-size: inherit;
         background-repeat: no-repeat;
         background-position: inherit;
         opacity: 0.8;
         pointer-events: none;
+        border-radius: 50%; /* Optional: makes glitch boxes circular if desired */
       }
 
       .test-text {
@@ -64,8 +66,8 @@
     </main>
     <script>
       const glitchContainer = document.querySelector(".glitch");
-      const glitchWidth = 600; // Width of the image
-      const glitchHeight = 400; // Height of the image
+      const glitchWidth = 600; // Width of the image (container is square now)
+      const glitchHeight = 600; // Height of the image (container is square now)
       const count = 50; // Increased the number of glitch fragments
 
       // Create glitch fragments
@@ -73,9 +75,19 @@
         const glitchBox = document.createElement("div");
         glitchBox.classList.add("glitch__box");
 
-        // Random position within the image bounds
-        const randomX = Math.random() * (glitchWidth - 60); // 80 is the width of the glitch box
-        const randomY = Math.random() * (glitchHeight - 20); // 30 is the height of the glitch box
+        // Random position within the image bounds (circle)
+        let randomX = Math.random() * glitchWidth;
+        let randomY = Math.random() * glitchHeight;
+
+        // Ensure glitch boxes stay within the circular area
+        while (
+          Math.pow(randomX - glitchWidth / 2, 2) +
+            Math.pow(randomY - glitchHeight / 2, 2) >
+          Math.pow(glitchWidth / 2, 2)
+        ) {
+          randomX = Math.random() * glitchWidth;
+          randomY = Math.random() * glitchHeight;
+        }
 
         // Position the glitch fragment
         glitchBox.style.left = `${randomX}px`;
