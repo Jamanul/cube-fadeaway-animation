@@ -15,9 +15,6 @@ body {
   font-family: "MyCustomFont", sans-serif;
   background: black;
   color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 200vh; /* Enough scroll space */
   margin: 0;
 }
@@ -26,13 +23,16 @@ body {
   font-size: 5rem;
   font-weight: bold;
   text-transform: uppercase;
-  overflow: hidden;
   border: 1px solid white;
-  padding: 150px 250px;
-
-  line-height: 1.2;
+  line-height: 0.1;
 }
 
+.text-container-test {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 /* Text Part (Base) */
 .text-part {
   position: relative;
@@ -40,13 +40,15 @@ body {
   font-weight: 700;
   font-size: 45px;
   transform: scale(2);
-  padding: 30px;
+  padding: 20px 30px;
   letter-spacing: 2px;
+  width: max-content;
   text-transform: uppercase;
+  margin: 5px;
 }
-.text-container .text-part::before,
-.text-container .text-part::after {
-  padding: 30px;
+.text-part::before,
+.text-part::after {
+  padding: 20px 30px;
   color: white;
   content: attr(data-text);
   position: absolute;
@@ -56,12 +58,12 @@ body {
   top: 0;
   left: 0;
 }
-.text-container .text-part::before {
+.text-part::before {
   left: 3px;
   text-shadow: -2px 0 red;
   animation: glitch-1 2s 0s linear reverse infinite;
 }
-.text-container .text-part::after {
+.text-part::after {
   left: -3px;
   text-shadow: -2px 0 blue;
   animation: glitch-2 2s 0s linear reverse infinite;
@@ -70,10 +72,12 @@ body {
 /* Center Text Part (e.g., MEMORY) */
 .center {
   position: relative;
-  display: block;
-  margin: 0px 0;
+  right: -95px;
 }
-
+.save-relative {
+  position: relative;
+  left: -125px;
+}
 .angle {
   display: inline-block;
   transform: rotate(-45deg); /* Rotates 15 degrees */
@@ -84,6 +88,9 @@ body {
   transform: rotate(-45deg); /* Rotates 15 degrees */
   color: white;
 }
+.relative {
+  position: relative;
+}
 .left {
   clip-path: inset(0% 0% 50% 0%);
   position: absolute;
@@ -93,14 +100,14 @@ body {
 /* Right Text Part */
 .right {
   clip-path: inset(50% 0% 0% 0%);
-  position: absolute;
   scale: 2;
+  position: relative;
   animation: position 2s steps(2) infinite; /* Instant movement */
 }
 .right-two {
   clip-path: inset(50% 0% 0% 0%);
-  position: absolute;
   transform: translateY(-0px);
+  position: relative;
   scale: 2;
   animation: position-two 2s 1s steps(2) infinite; /* Instant movement */
 }
