@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glitch Effect</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        position: relative;
+      }
+
+      .glitch {
+        position: relative;
+        width: 600px;
+        height: 400px;
+        background-image: url("./images/full-earth.svg");
+        background-size: 600px 400px; /* Matches container size */
+        background-repeat: no-repeat;
+        background-position: center;
+        overflow: hidden;
+      }
+
+      .glitch__box {
+        position: absolute;
+        width: 60px;
+        height: 20px;
+        background-image: inherit;
+        background-size: inherit;
+        background-repeat: no-repeat;
+        background-position: inherit;
+        clip-path: none;
+        opacity: 0.8;
+        pointer-events: none;
+      }
+
+      .test-text {
+        position: absolute;
+        top: 12%;
+        left: 5%;
+        font-size: 100px;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        z-index: 10;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <div class="glitch"></div>
+        <h2 class="test-text">centered text</h2>
+      </div>
+    </main>
+    <script>
+      const glitchContainer = document.querySelector(".glitch");
+      const count = 20; // Number of glitch fragments
+
+      // Create glitch fragments
+      for (let i = 0; i < count; i++) {
+        const glitchBox = document.createElement("div");
+        glitchBox.classList.add("glitch__box");
+
+        const randomX = Math.random() * 570; // Random x position within the container width
+        const randomY = Math.random() * 390; // Random y position within the container height
+
+        // Position the glitch fragment
+        glitchBox.style.left = `${randomX}px`;
+        glitchBox.style.top = `${randomY}px`;
+
+        // Align the background position to match the original image
+        glitchBox.style.backgroundPosition = `-${randomX}px -${randomY}px`;
+
+        glitchContainer.appendChild(glitchBox);
+      }
+
+      // Animate the glitch effect
+      setInterval(() => {
+        const glitchBoxes = document.querySelectorAll(".glitch__box");
+        glitchBoxes.forEach((box) => {
+          const offsetX = Math.random() * 10 - 5; // Slight horizontal movement
+          const offsetY = Math.random() * 10 - 5; // Slight vertical movement
+
+          // Apply translation for the glitch effect
+          box.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        });
+      }, 200);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+.glitch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("https://www.voxloud.com/wp-content/uploads/2020/11/voxloud-centralino-in-cloud.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-color: #b5bac2;
+  overflow: hidden;
+  &__box {
+    position: absolute;
+    background-image: url("https://www.voxloud.com/wp-content/uploads/2020/11/voxloud-centralino-in-cloud.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #b5bac2;
+  }
+}

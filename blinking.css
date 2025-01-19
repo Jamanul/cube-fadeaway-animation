@@ -1,101 +1,148 @@
 @font-face {
-    font-family: 'MyCustomFont'; /* Name your font */
-    src: url('fonts/Tronica-Mono.ttf') format('truetype'),
-         url('fonts/Tronica-Mono.otf') format('opentype');
-    font-weight: normal; 
-    font-style: normal; 
-  }
-  
+  font-family: "MyCustomFont"; /* Name your font */
+  src: url("fonts/Tronica-Mono.ttf") format("truetype"),
+    url("fonts/Tronica-Mono.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
 
-  body {
-    font-family: 'MyCustomFont', sans-serif;
-    background: black;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-  }
+body {
+  font-family: "MyCustomFont", sans-serif;
+  background: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
 
-  .arrow{
-    font-size: 150px;
+.arrow {
+  font-size: 150px;
+  color: gray;
+}
+
+.red-arrow {
+  color: tomato;
+}
+
+.blinking-text {
+  color: gray;
+  font-size: 50px;
+  animation: pulse 1.5s steps(2) infinite;
+}
+
+@keyframes pulse {
+  0% {
     color: gray;
   }
-  
-  .red-arrow {
-    color:tomato;
+  100% {
+    color: red;
   }
+}
 
-  .blinking-text{
-    color: gray;
-    font-size: 50px;
-    animation: pulse 1.5s steps(2) infinite;
-  }
+.blinking-european-text {
+  font-size: 100px;
+}
 
-  @keyframes pulse {
-    0% {
-        color: gray;
-    }
-    100% {
-        color: red;
-    }
-  }
-  
-  .blinking-european-text {
-    font-size: 100px;
-  }
+.border-text {
+  font-size: 100px;
+  text-align: center;
+  color: transparent;
+  -webkit-text-stroke: 1px white;
+}
+.border-text-border {
+  color: white;
+}
+.earth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.earth {
+  position: relative;
+  width: 700px; /* Size of the Earth container */
+  height: 700px; /* Size of the Earth container */
+  background-image: url("./images/earth.png"); /* Earth image as background */
+  background-size: cover; /* Ensure image covers the entire container */
+  background-position: center; /* Center the image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.green-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  clip-path: circle(50% at 50% 50%);
+  justify-content: center;
+  align-items: center;
+  pointer-events: none; /* Prevent the green-layer from interfering with the text */
+}
 
-  .border-text {
-    font-size: 100px;
-    text-align: center;
-    color: transparent; 
-    -webkit-text-stroke: 1px white; 
-  }
-  .border-text-border{
-    color: white;
-  }
-  .earth-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  .earth {
-    position: relative;
-    width: 700px;  /* Size of the Earth container */
-    height: 700px;  /* Size of the Earth container */
-    background-image: url('./images/earth.png');  /* Earth image as background */
-    background-size: cover;  /* Ensure image covers the entire container */
-    background-position: center;  /* Center the image */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-   
-  }
-  
-  .green-layer {
+.cube {
+  position: absolute;
+  transition: opacity 0.5s ease; /* Smooth fade-out transition */
+}
+.text-overlay {
+  position: absolute;
+  color: white; /* Text color */
+  font-size: 100px; /* Text size */
+  font-weight: bold; /* Text boldness */
+  z-index: 1;
+}
+
+.earth-container-glitch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.earth-glitch {
+  position: relative;
+  width: 700px;
+  height: 700px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.glitch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("https://www.voxloud.com/wp-content/uploads/2020/11/voxloud-centralino-in-cloud.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-color: #b5bac2;
+  overflow: hidden;
+  &__box {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    clip-path: circle(50% at 50% 50%);
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;  /* Prevent the green-layer from interfering with the text */
+    background-image: url("https://www.voxloud.com/wp-content/uploads/2020/11/voxloud-centralino-in-cloud.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #b5bac2;
   }
-  
-  .cube {
-    position: absolute;
-    transition: opacity 0.5s ease;  /* Smooth fade-out transition */
-  }
-  .text-overlay {
-    position: absolute;
-    color: white;  /* Text color */
-    font-size: 100px;  /* Text size */
-    font-weight: bold;  /* Text boldness */
-    z-index: 1;  
-  }
-  
+}
+/* .cube-glitch {
+  position: absolute;
+  transition: opacity 0.5s ease; 
+} */
+.text-overlay-glitch {
+  position: absolute;
+  color: gray; /* Text color */
+  font-size: 100px; /* Text size */
+  font-weight: bold; /* Text boldness */
+  z-index: 1;
+}
