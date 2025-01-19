@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
      * @param {HTMLElement} element - The element to divide into cubes.
      * @param {number} cubeSize - The size of each cube in pixels.
      */
-    function divideIntoCubesLoop(element, cubeSize = 16) {
+    function divideIntoCubesLoop(element, cubeSize = 2) {
       // Get element dimensions
       const { offsetWidth: width, offsetHeight: height } = element;
   
