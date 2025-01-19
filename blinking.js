@@ -322,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const cubeHeight = 32; // Cube height (32px)
   const fadeDuration = 2500; // Duration for each fade-out transition
   let cubes = [];
-  let testNumber = 4; // Control how many loops we want
+  // let testNumber = 4; // Control how many loops we want
   let isRunning = true; 
 
   // Function to reset cubes
@@ -399,10 +399,10 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }, delay);
       });
-      testNumber--;
-      if (testNumber == 0) {
-          isRunning = false;
-      }
+      // testNumber--;
+      // if (testNumber == 0) {
+      //     isRunning = false;
+      // }
     });
   };
 
