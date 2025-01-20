@@ -40,12 +40,12 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      clip-path: inset(0% 0% 0 0);
+      clip-path: inset(40% 0% 0 0);
       /* Clip the image and gray background */
     }
     .green-layer-one {
       position: absolute;
-      clip-path: inset(0% 0% 0% 0%);
+      clip-path: inset(0% 0% 90% 0%);
       top: 0px;
       width: 100%;
       height: 100%;
@@ -58,12 +58,11 @@
       pointer-events: none;
       z-index: 2;
       /* Apply the glitch effects */
-      animation: glitch-1 2s 0s linear reverse infinite,
-        glitch-2 2s 0s linear reverse infinite, position 2s 1s steps(2) infinite;
+      animation: position-one 2s 1s steps(2) infinite;
     }
-    /* .green-layer-two {
+    .green-layer-two {
       position: absolute;
-      clip-path: inset(0% 0% 90% 0%);
+      clip-path: inset(10% 0% 80% 0%);
       top: 0;
       width: 100%;
       height: 100%;
@@ -76,8 +75,7 @@
       align-items: center;
       pointer-events: none;
       z-index: 2;
-      animation: glitch-1 2s 0s linear reverse infinite,
-        glitch-2 2s 0s linear reverse infinite, position 2s 1s steps(2) infinite;
+      animation: position-two 2s 1s steps(2) infinite;
     }
     .green-layer-three {
       position: absolute;
@@ -94,8 +92,6 @@
       align-items: center;
       pointer-events: none;
       z-index: 2;
-      animation: glitch-1 2s 0s linear reverse infinite,
-        glitch-2 2s 0s linear reverse infinite, position 2s 1s steps(2) infinite;
     }
     .green-layer-four {
       position: absolute;
@@ -112,11 +108,9 @@
       align-items: center;
       pointer-events: none;
       z-index: 2;
-      animation: glitch-1 2s 0s linear reverse infinite,
-        glitch-2 2s 0s linear reverse infinite, position 2s 1s steps(2) infinite;
-    } */
+    }
 
-    @keyframes glitch-1 {
+    /* @keyframes glitch-1 {
       0% {
         clip: rect(332px, auto, 101px, 30px);
       }
@@ -246,14 +240,22 @@
       100% {
         clip: rect(83px, auto, 40px, 30px);
       }
-    }
+    } */
 
-    @keyframes position {
+    @keyframes position-one {
       0% {
         transform: translateX(0); /* Start at the current position */
       }
       100% {
-        transform: translateX(10px); /* Jump back to the starting position */
+        transform: translateX(100px); /* Jump back to the starting position */
+      }
+    }
+    @keyframes position-two {
+      0% {
+        transform: translateX(0); /* Start at the current position */
+      }
+      100% {
+        transform: translateX(-100px); /* Jump back to the starting position */
       }
     }
 
@@ -272,6 +274,20 @@
   </style>
   <body>
     <section>
+      <div class="earth-container">
+        <div class="earth">
+          <div class="green-layer"></div>
+          <div class="green-layer-one"></div>
+          <div class="green-layer-two"></div>
+          <div class="green-layer-three"></div>
+          <div class="green-layer-four"></div>
+          <!-- Green layer inside Earth -->
+          <div class="gray-layer"></div>
+          <!-- Gray layer with 80% opacity -->
+        </div>
+        <div class="text-overlay">Centered Text</div>
+        <!-- Text overlay outside Earth -->
+      </div>
       <div class="earth-container">
         <div class="earth">
           <div class="green-layer"></div>
