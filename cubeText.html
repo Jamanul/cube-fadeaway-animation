@@ -22,6 +22,8 @@
         font-size: 100px;
         position: relative;
         z-index: -1;
+        opacity: 0; /* Initially set opacity to 0 */
+        transition: opacity 0.5s ease; /* Add transition for smooth opacity change */
       }
       .fade-away-text-container {
         width: fit-content;
@@ -31,6 +33,10 @@
         position: absolute;
         z-index: 1;
       }
+      .test-text {
+        opacity: 0;
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -39,15 +45,21 @@
         <h2 class="test-text">Cube fade away</h2>
       </div>
     </div>
+    <div class="container">
+      <div class="fade-away-text-container">
+        <h2 class="test-text">Another Cube fade away</h2>
+      </div>
+    </div>
+
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         let animationInterval = null; // Track the current interval
 
         function divideIntoCubesLoop(element, cubeSize = 16) {
+          const text = element.querySelector(".test-text");
           const { offsetWidth: width, offsetHeight: height } = element;
           const cols = Math.ceil(width / cubeSize);
           const rows = Math.ceil(height / cubeSize);
-          // console.log(`Dividing into cubes: ${cols} cols x ${rows} rows`);
 
           const cubePositions = [];
           for (let row = 0; row < rows; row++) {
@@ -67,10 +79,10 @@
             shuffleArray(cubePositions);
             let index = 0;
 
+            // Initially, fill the entire container with cubes
             animationInterval = setInterval(() => {
               if (!animationInterval) return;
-
-              const batchSize = 100;
+              const batchSize = 10000;
               const endIndex = Math.min(
                 index + batchSize,
                 cubePositions.length
@@ -93,6 +105,10 @@
               if (index >= cubePositions.length) {
                 clearInterval(animationInterval);
                 animationInterval = null;
+
+                // After all cubes are added, set text opacity to 1
+
+                // After all cubes are added, start removing them
                 setTimeout(removeCubes, 500);
               }
             }, 50);
@@ -103,6 +119,7 @@
             shuffleArray(cubes);
             let index = 0;
 
+            // Remove the cubes in batches
             animationInterval = setInterval(() => {
               if (!animationInterval) return;
 
@@ -118,45 +135,60 @@
               if (index >= cubes.length) {
                 clearInterval(animationInterval);
                 animationInterval = null;
-                setTimeout(addCubes, 500);
               }
             }, 50);
           }
 
-          addCubes();
+          addCubes(); // Start by adding the cubes
         }
 
         // Intersection Observer
-        const textElement = document.querySelector(".fade-away-text-container");
-        textElement.style.position = "relative";
+        const sections = document.querySelectorAll(".fade-away-text-container"); // All sections with the class
+        sections.forEach((section) => {
+          section.style.position = "relative";
 
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                // console.log(
-                //   "Container entered the viewport. Starting animation..."
-                // );
-                divideIntoCubesLoop(textElement, 10);
-              } else {
-                // console.log(
-                //   "Container left the viewport. Stopping animation..."
-                // );
-                clearInterval(animationInterval);
-                animationInterval = null;
-                // Remove any remaining cubes
-                const cubes = document.querySelectorAll(".cube-text");
-                cubes.forEach((cube) => cube.remove());
-              }
-            });
-          },
-          {
-            root: null, // Observe relative to the viewport
-            threshold: 0.1, // Trigger when 10% of the element is visible
-          }
-        );
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  console.log(
+                    "Container entered the viewport. Starting animation..."
+                  );
+                  const texts = document.querySelectorAll(".test-text");
 
-        observer.observe(textElement); // Start observing the container
+                  // Loop through each .test-text element and apply styles
+                  texts.forEach((text) => {
+                    text.style.opacity = "1";
+                    text.style.color = "black";
+                  });
+                  divideIntoCubesLoop(entry.target, 10); // Trigger animation for each section
+                } else {
+                  console.log(
+                    "Container left the viewport. Stopping animation..."
+                  );
+                  const texts = document.querySelectorAll(".test-text");
+
+                  // Loop through each .test-text element and apply styles
+                  texts.forEach((text) => {
+                    text.style.opacity = "0";
+                    text.style.color = "white";
+                  });
+                  clearInterval(animationInterval);
+                  animationInterval = null;
+                  // Remove any remaining cubes
+                  const cubes = entry.target.querySelectorAll(".cube-text");
+                  cubes.forEach((cube) => cube.remove());
+                }
+              });
+            },
+            {
+              root: null, // Observe relative to the viewport
+              threshold: 0.1, // Trigger when 10% of the element is visible
+            }
+          );
+
+          observer.observe(section); // Start observing each section
+        });
       });
     </script>
   </body>
