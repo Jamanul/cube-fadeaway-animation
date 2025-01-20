@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      .container {
+        height: 400vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
       .cube {
         width: 16px;
         height: 16px;
@@ -22,123 +28,136 @@
       }
       .cube-text {
         background-color: black;
-        position: relative;
+        position: absolute;
         z-index: 1;
-      }
-
-      .opacity {
-        opacity: 1;
       }
     </style>
   </head>
   <body>
-    <div class="fade-away-text-container">
-      <h2 class="test-text">Cube fade away</h2>
+    <div class="container">
+      <div class="fade-away-text-container">
+        <h2 class="test-text">Cube fade away</h2>
+      </div>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        let animationInterval = null; // Track the current interval
+
+        function divideIntoCubesLoop(element, cubeSize = 16) {
+          const { offsetWidth: width, offsetHeight: height } = element;
+          const cols = Math.ceil(width / cubeSize);
+          const rows = Math.ceil(height / cubeSize);
+          // console.log(`Dividing into cubes: ${cols} cols x ${rows} rows`);
+
+          const cubePositions = [];
+          for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+              cubePositions.push({ row, col });
+            }
+          }
+
+          function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+          }
+
+          function addCubes() {
+            shuffleArray(cubePositions);
+            let index = 0;
+
+            animationInterval = setInterval(() => {
+              if (!animationInterval) return;
+
+              const batchSize = 100;
+              const endIndex = Math.min(
+                index + batchSize,
+                cubePositions.length
+              );
+
+              for (let i = index; i < endIndex; i++) {
+                const { row, col } = cubePositions[i];
+                const cube = document.createElement("div");
+                cube.classList.add("cube-text");
+                cube.style.width = `${cubeSize}px`;
+                cube.style.height = `${cubeSize}px`;
+                cube.style.position = "absolute";
+                cube.style.left = `${col * cubeSize}px`;
+                cube.style.top = `${row * cubeSize}px`;
+                cube.style.backgroundColor = "#fff";
+                element.appendChild(cube);
+              }
+
+              index = endIndex;
+              if (index >= cubePositions.length) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+                setTimeout(removeCubes, 500);
+              }
+            }, 50);
+          }
+
+          function removeCubes() {
+            const cubes = Array.from(document.querySelectorAll(".cube-text"));
+            shuffleArray(cubes);
+            let index = 0;
+
+            animationInterval = setInterval(() => {
+              if (!animationInterval) return;
+
+              const batchSize = 100;
+              const endIndex = Math.min(index + batchSize, cubes.length);
+
+              for (let i = index; i < endIndex; i++) {
+                const cube = cubes[i];
+                cube.remove();
+              }
+
+              index = endIndex;
+              if (index >= cubes.length) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+                setTimeout(addCubes, 500);
+              }
+            }, 50);
+          }
+
+          addCubes();
+        }
+
+        // Intersection Observer
+        const textElement = document.querySelector(".fade-away-text-container");
+        textElement.style.position = "relative";
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                // console.log(
+                //   "Container entered the viewport. Starting animation..."
+                // );
+                divideIntoCubesLoop(textElement, 10);
+              } else {
+                // console.log(
+                //   "Container left the viewport. Stopping animation..."
+                // );
+                clearInterval(animationInterval);
+                animationInterval = null;
+                // Remove any remaining cubes
+                const cubes = document.querySelectorAll(".cube-text");
+                cubes.forEach((cube) => cube.remove());
+              }
+            });
+          },
+          {
+            root: null, // Observe relative to the viewport
+            threshold: 0.1, // Trigger when 10% of the element is visible
+          }
+        );
+
+        observer.observe(textElement); // Start observing the container
+      });
+    </script>
   </body>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      /**
-       * Divide the element into 16x16 cubes dynamically with randomized order and delay,
-       * and then remove them randomly in a loop.
-       * @param {HTMLElement} element - The element to divide into cubes.
-       * @param {number} cubeSize - The size of each cube in pixels.
-       */
-      function divideIntoCubesLoop(element, cubeSize = 16) {
-        // Get element dimensions
-        const { offsetWidth: width, offsetHeight: height } = element;
-
-        // Calculate number of columns and rows
-        const cols = Math.ceil(width / cubeSize);
-        const rows = Math.ceil(height / cubeSize);
-
-        console.log(`Element dimensions: ${width}x${height}`);
-        console.log(`Dividing into cubes of size ${cubeSize}px`);
-        console.log(`Columns: ${cols}, Rows: ${rows}`);
-
-        // Create an array of cube positions
-        const cubePositions = [];
-        for (let row = 0; row < rows; row++) {
-          for (let col = 0; col < cols; col++) {
-            cubePositions.push({ row, col });
-          }
-        }
-
-        // Function to shuffle an array
-        function shuffleArray(array) {
-          for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-          }
-        }
-
-        // Function to add cubes
-        function addCubes() {
-          shuffleArray(cubePositions); // Shuffle the positions randomly
-          let index = 0;
-
-          const interval = setInterval(() => {
-            // Add 5 cubes at a time for faster effect
-            const batchSize = 100;
-            const endIndex = Math.min(index + batchSize, cubePositions.length);
-
-            for (let i = index; i < endIndex; i++) {
-              const { row, col } = cubePositions[i];
-              const cube = document.createElement("div");
-              cube.classList.add("cube-text"); // Add a 'cube-text' class
-              cube.style.width = `${cubeSize}px`;
-              cube.style.height = `${cubeSize}px`;
-              cube.style.position = "absolute";
-              cube.style.left = `${col * cubeSize}px`;
-              cube.style.top = `${row * cubeSize}px`;
-              cube.style.backgroundColor = "#fff"; // Optional: Cube color
-
-              // Append the cube to the element
-              element.appendChild(cube);
-            }
-
-            index = endIndex;
-            if (index >= cubePositions.length) {
-              clearInterval(interval); // Stop adding cubes
-              setTimeout(removeCubes, 500); // Wait 0.5 seconds before removing cubes
-            }
-          }, 50); // Small delay between adding cubes (50ms for faster animation)
-        }
-
-        // Function to remove cubes randomly
-        function removeCubes() {
-          const cubes = Array.from(document.querySelectorAll(".cube-text"));
-          shuffleArray(cubes); // Shuffle cubes for random removal
-          let index = 0;
-
-          const interval = setInterval(() => {
-            // Remove 5 cubes at a time for faster effect
-            const batchSize = 100;
-            const endIndex = Math.min(index + batchSize, cubes.length);
-
-            for (let i = index; i < endIndex; i++) {
-              const cube = cubes[i];
-              console.log(`Removing cube at position ${i}`);
-              cube.remove();
-            }
-
-            index = endIndex;
-            if (index >= cubes.length) {
-              clearInterval(interval); // Stop removing cubes
-              setTimeout(addCubes, 500); // Wait 0.5 seconds before adding cubes again
-            }
-          }, 50); // Small delay between removing cubes (50ms for faster animation)
-        }
-
-        addCubes(); // Start the loop
-      }
-
-      // Select the text element
-      const textElement = document.querySelector(".fade-away-text-container");
-      textElement.style.position = "relative"; // Ensure the text element is positioned relative for absolute cubes
-
-      // Call the function to divide the element into cubes dynamically and loop
-      divideIntoCubesLoop(textElement, 10);
-    });
-  </script>
 </html>
