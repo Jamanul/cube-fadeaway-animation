@@ -28,9 +28,24 @@
       .fade-away-text-container {
         width: fit-content;
       }
+      .test-text-once {
+        font-size: 100px;
+        position: relative;
+        z-index: -1;
+        opacity: 1; /* Initially set opacity to 0 */
+        transition: opacity 0.5s ease; /* Add transition for smooth opacity change */
+      }
+      .fade-away-text-container-once {
+        width: fit-content;
+      }
     </style>
   </head>
   <body>
+    <div class="">
+      <div class="fade-away-text-container-once">
+        <h2 class="test-text-once">Cube fade away</h2>
+      </div>
+    </div>
     <div class="container">
       <div class="fade-away-text-container">
         <h2 class="test-text">Cube fade away</h2>
@@ -43,6 +58,88 @@
     </div>
 
     <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        let animationInterval = null; // Track the current interval
+
+        function divideIntoCubesLoop(element, cubeSize = 16) {
+          const text = element.querySelector(".test-text-once");
+          const { offsetWidth: width, offsetHeight: height } = element;
+          const cols = Math.ceil(width / cubeSize);
+          const rows = Math.ceil(height / cubeSize);
+
+          const cubePositions = [];
+          for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+              cubePositions.push({ row, col });
+            }
+          }
+
+          function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+          }
+
+          function createCubes() {
+            shuffleArray(cubePositions);
+            // Initially, fill the entire container with cubes
+            cubePositions.forEach(({ row, col }) => {
+              const cube = document.createElement("div");
+              cube.classList.add("cube-text");
+              cube.style.width = `${cubeSize}px`;
+              cube.style.height = `${cubeSize}px`;
+              cube.style.position = "absolute";
+              cube.style.left = `${col * cubeSize}px`;
+              cube.style.top = `${row * cubeSize}px`;
+              cube.style.backgroundColor = "#fff"; // White background for each cube
+              element.appendChild(cube);
+            });
+
+            // Start the removal process after a short delay
+            setTimeout(removeCubes, 500);
+          }
+
+          function removeCubes() {
+            const cubes = Array.from(document.querySelectorAll(".cube-text"));
+            shuffleArray(cubes);
+            let index = 0;
+
+            // Remove the cubes randomly
+            animationInterval = setInterval(() => {
+              if (!animationInterval) return;
+
+              const batchSize = 100;
+              const endIndex = Math.min(index + batchSize, cubes.length);
+
+              for (let i = index; i < endIndex; i++) {
+                const cube = cubes[i];
+                cube.remove();
+              }
+
+              index = endIndex;
+              if (index >= cubes.length) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+              }
+            }, 50);
+          }
+
+          createCubes(); // Start by creating the cubes
+        }
+
+        // Get all elements with the class 'fade-away-text-container' and run the loop once for each
+        const sections = document.querySelectorAll(
+          ".fade-away-text-container-once"
+        );
+        sections.forEach((section) => {
+          section.style.position = "relative";
+
+          // Trigger animation for each section once
+          divideIntoCubesLoop(section, 10); // Trigger animation for each section
+        });
+      });
+
       document.addEventListener("DOMContentLoaded", () => {
         let animationInterval = null; // Track the current interval
 

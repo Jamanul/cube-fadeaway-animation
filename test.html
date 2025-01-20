@@ -25,7 +25,7 @@
         position: relative;
         width: 400px;
         height: 400px; /* Changed to square to create a circular effect */
-        /* background: url("./images/full-earth.svg"); */
+        background: url("./images/full-earth.svg");
         background-size: 400px 400px; /* Matches container size */
         background-repeat: no-repeat;
         background-position: center;
@@ -60,10 +60,7 @@
   <body>
     <main>
       <div class="container">
-        <div
-          style="background: url('./images/full-earth.svg')"
-          class="glitch"
-        ></div>
+        <div class="glitch"></div>
         <h2 class="test-text">centered text</h2>
       </div>
     </main>
@@ -112,7 +109,7 @@
           // Apply translation for the glitch effect
           box.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
         });
-      }, 200);
+      }, 600);
     </script>
   </body>
 </html>
