@@ -28,15 +28,6 @@
       .fade-away-text-container {
         width: fit-content;
       }
-      .cube-text {
-        background-color: black;
-        position: absolute;
-        z-index: 1;
-      }
-      .test-text {
-        opacity: 0;
-        color: white;
-      }
     </style>
   </head>
   <body>
@@ -75,43 +66,23 @@
             }
           }
 
-          function addCubes() {
+          function createCubes() {
             shuffleArray(cubePositions);
-            let index = 0;
-
             // Initially, fill the entire container with cubes
-            animationInterval = setInterval(() => {
-              if (!animationInterval) return;
-              const batchSize = 10000;
-              const endIndex = Math.min(
-                index + batchSize,
-                cubePositions.length
-              );
+            cubePositions.forEach(({ row, col }) => {
+              const cube = document.createElement("div");
+              cube.classList.add("cube-text");
+              cube.style.width = `${cubeSize}px`;
+              cube.style.height = `${cubeSize}px`;
+              cube.style.position = "absolute";
+              cube.style.left = `${col * cubeSize}px`;
+              cube.style.top = `${row * cubeSize}px`;
+              cube.style.backgroundColor = "#fff"; // White background for each cube
+              element.appendChild(cube);
+            });
 
-              for (let i = index; i < endIndex; i++) {
-                const { row, col } = cubePositions[i];
-                const cube = document.createElement("div");
-                cube.classList.add("cube-text");
-                cube.style.width = `${cubeSize}px`;
-                cube.style.height = `${cubeSize}px`;
-                cube.style.position = "absolute";
-                cube.style.left = `${col * cubeSize}px`;
-                cube.style.top = `${row * cubeSize}px`;
-                cube.style.backgroundColor = "#fff";
-                element.appendChild(cube);
-              }
-
-              index = endIndex;
-              if (index >= cubePositions.length) {
-                clearInterval(animationInterval);
-                animationInterval = null;
-
-                // After all cubes are added, set text opacity to 1
-
-                // After all cubes are added, start removing them
-                setTimeout(removeCubes, 500);
-              }
-            }, 50);
+            // Start the removal process after a short delay
+            setTimeout(removeCubes, 500);
           }
 
           function removeCubes() {
@@ -119,7 +90,7 @@
             shuffleArray(cubes);
             let index = 0;
 
-            // Remove the cubes in batches
+            // Remove the cubes randomly
             animationInterval = setInterval(() => {
               if (!animationInterval) return;
 
@@ -139,7 +110,7 @@
             }, 50);
           }
 
-          addCubes(); // Start by adding the cubes
+          createCubes(); // Start by creating the cubes
         }
 
         // Intersection Observer
