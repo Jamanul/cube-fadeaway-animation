@@ -28,10 +28,10 @@
 
     @keyframes slide {
       from {
-        transform: translateX(-100%);
+        transform: translateX(0);
       }
       to {
-        transform: translateX(0);
+        transform: translateX(-100%);
       }
     }
 
@@ -60,7 +60,6 @@
       white-space: nowrap;
       position: relative;
       display: flex;
-      gap: 20px;
     }
 
     .logos:before,
@@ -77,11 +76,11 @@
       display: inline-block;
       animation: 60s slide infinite linear;
       display: flex;
-      gap: 20px;
     }
 
     .logos-slide .shaky {
-      animation: shaky 0.15s infinite linear;
+      animation: shaky 0.2s infinite linear;
+      padding-right: 20px;
     }
   </style>
   <body>
@@ -101,6 +100,10 @@
   </body>
   <script>
     var copy = document.querySelector(".logos-slide").cloneNode(true);
+
+    // Append the cloned element
     document.querySelector(".logos").appendChild(copy);
+
+    // Make the container visible after appending
   </script>
 </html>
