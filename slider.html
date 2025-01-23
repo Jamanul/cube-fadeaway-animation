@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    @font-face {
+      font-family: "MyCustomFont"; /* Name your font */
+      src: url("fonts/Tronica-Mono.ttf") format("truetype"),
+        url("fonts/Tronica-Mono.otf") format("opentype");
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: "MyCustomFont", sans-serif;
+      background: black;
+      color: white;
+      margin: 0;
+    }
+
+    @keyframes slide {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+
+    .logos {
+      overflow: hidden;
+      padding: 60px 0;
+      background: gray;
+      white-space: nowrap;
+      position: relative;
+      display: flex;
+    }
+
+    .logos:before,
+    .logos:after {
+      position: absolute;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      content: "";
+      z-index: 2;
+    }
+
+    .logos:hover .logos-slide {
+      animation-play-state: paused;
+    }
+
+    .logos-slide {
+      display: inline-block;
+      animation: 60s slide infinite linear;
+      display: flex;
+      gap: 20px;
+    }
+
+    .logos-slide img {
+      height: 50px;
+      margin: 0 40px;
+    }
+  </style>
+  <body>
+    <div class="logos">
+      <div class="logos-slide">
+        <h2>FONT STRUCTURE ↓↓</h2>
+        <h2>FONT STRUCTURE ↓↓</h2>
+        <h2>FONT STRUCTURE ↓↓</h2>
+        <h2>FONT STRUCTURE ↓↓</h2>
+        <h2>FONT STRUCTURE ↓↓</h2>
+        <h2>FONT STRUCTURE ↓↓</h2>
+        <h2>FONT STRUCTURE ↓↓</h2>
+        <h2>FONT STRUCTURE ↓↓</h2>
+        <h2>FONT STRUCTURE ↓↓</h2>
+      </div>
+    </div>
+  </body>
+  <script>
+    var copy = document.querySelector(".logos-slide").cloneNode(true);
+    document.querySelector(".logos").appendChild(copy);
+  </script>
+</html>
