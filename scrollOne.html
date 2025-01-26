@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll Snap Fix</title>
+    <style>
+      * {
+        margin: 0px;
+      }
+      html {
+        background: #f2f2f2;
+        scroll-behavior: smooth;
+      }
+
+      .scroll-container {
+        max-width: 100vw;
+        height: 50vh;
+        font-size: 150px;
+        overflow-y: hidden;
+      }
+
+      .scroll-container {
+        margin: 0 auto;
+      }
+
+      .card {
+        height: 50vh;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        scroll-snap-align: start;
+      }
+
+      .card-one {
+        background: #49b293;
+      }
+
+      .card-two {
+        background: #c94e4b;
+      }
+
+      .card-three {
+        background: #4cc1be;
+      }
+
+      .card-four {
+        background: #8360a6;
+      }
+
+      .height {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        background: #e0e0e0;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Extra sections for navigation -->
+    <section class="height">Section Before Scroll Container</section>
+
+    <!-- Scroll Container -->
+    <div class="scroll-container" id="scrollContainer">
+      <div class="card card-one">1</div>
+      <div class="card card-two">2</div>
+      <div class="card card-three">3</div>
+      <div class="card card-four">4</div>
+    </div>
+
+    <section class="height">Section After Scroll Container</section>
+
+    <script>
+      // Create an IntersectionObserver instance
+      // Create an IntersectionObserver instance
+      const targetedSection = document.querySelector(".scroll-container");
+      let bodyScrollingEnabled = true;
+      console.log(bodyScrollingEnabled);
+
+      // Intersection Observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            // Check if the scroll container is 60% inside the viewport
+            if (
+              entry.isIntersecting &&
+              entry.boundingClientRect.top <= window.innerHeight * 0.6
+            ) {
+              console.log("Scroll container has entered 60% of the viewport!");
+              targetedSection.style.overflow = "scroll";
+              document.body.style.overflow = "hidden";
+              bodyScrollingEnabled = false;
+              console.log("later", bodyScrollingEnabled);
+            } else {
+              bodyScrollingEnabled = true;
+              console.log("else", bodyScrollingEnabled);
+            }
+          });
+        },
+        {
+          root: null, // Use the viewport as the root
+          threshold: 0, // Trigger when any part of the element is visible
+          rootMargin: "0px 0px -60% 0px", // Trigger when the top of the element reaches the top 60% of the viewport
+        }
+      );
+
+      // Observe the scroll-container element
+      observer.observe(targetedSection);
+
+      // Track scroll events inside the targeted section
+      targetedSection.addEventListener("scroll", () => {
+        // If scroll reaches the bottom of the section, reset the scroll settings
+        if (
+          targetedSection.scrollHeight - targetedSection.scrollTop ===
+          targetedSection.clientHeight
+        ) {
+          console.log("Reached the bottom of the targeted section!");
+
+          // Disable scroll for the section and enable scroll for the body
+          targetedSection.style.overflow = "hidden";
+          document.body.style.overflow = "auto";
+          bodyScrollingEnabled = true;
+          console.log("Body scroll enabled and section scroll disabled");
+        }
+      });
+
+      // Add a scroll event listener to handle scrolling behavior when section hits top or bottom
+      window.addEventListener("scroll", () => {
+        console.log("Scrolling...");
+
+        // Trigger the IntersectionObserver manually
+        document.querySelectorAll(".scroll-container").forEach((element) => {
+          observer.observe(element);
+        });
+      });
+    </script>
+  </body>
+</html>
