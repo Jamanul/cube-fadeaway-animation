@@ -3,26 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Scroll Snap Example</title>
+    <title>Scroll Snap Fix</title>
     <style>
+      * {
+        margin: 0px;
+      }
       html {
         background: #f2f2f2;
+        scroll-behavior: smooth; /* Enable smooth scrolling */
+      }
+
+      .scroll-container,
+      .scroll-area {
+        max-width: 100vw;
+        height: 100vh;
+        font-size: 150px;
       }
 
       .scroll-container {
-        max-width: 100vw;
-        height: 100vh;
         overflow: auto;
         scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
       }
 
       .scroll-area {
         scroll-snap-align: start;
+      }
+
+      .scroll-container,
+      .scroll-area {
+        margin: 0 auto;
+      }
+
+      .scroll-area {
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
         height: 100vh;
+        background-color: #000;
       }
 
       .card {
@@ -31,7 +50,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 150px;
       }
 
       .card-one {
@@ -49,10 +67,24 @@
       .card-four {
         background: #8360a6;
       }
+
+      .height {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        background: #e0e0e0;
+        color: #333;
+      }
     </style>
   </head>
   <body>
-    <div class="scroll-container">
+    <!-- Extra sections for navigation -->
+    <section class="height">Section Before Scroll Container</section>
+
+    <!-- Scroll Container -->
+    <div class="scroll-container" id="scrollContainer">
       <div class="scroll-area">
         <div class="card card-one">1</div>
       </div>
@@ -66,5 +98,24 @@
         <div class="card card-four">4</div>
       </div>
     </div>
+
+    <section class="height">Section After Scroll Container</section>
+
+    <script>
+      // Ensure scroll container is always engaged
+      const scrollContainer = document.getElementById("scrollContainer");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              scrollContainer.focus({ preventScroll: false });
+            }
+          });
+        },
+        { threshold: 0.5 } // Trigger when 50% of the container is visible
+      );
+
+      observer.observe(scrollContainer);
+    </script>
   </body>
 </html>
