@@ -6,57 +6,62 @@
     <title>Scroll Snap Fix</title>
     <style>
       * {
-        margin: 0px;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
       html {
         background: #f2f2f2;
-        scroll-behavior: smooth;
+      }
+
+      .scroll-container,
+      .scroll-area {
+        max-width: 850px;
+        height: 600px;
+        font-size: 60px;
       }
 
       .scroll-container {
-        max-width: 100vw;
-        height: 50vh;
-        font-size: 150px;
-        overflow-y: hidden;
+        overflow: hidden;
+        scroll-snap-type: y mandatory;
+        position: sticky;
+        top: 30%; /* Stick to 30% of the viewport height */
       }
 
-      .scroll-container {
-        margin: 0 auto;
-      }
-
-      .card {
-        height: 50vh;
-        width: 100vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      .scroll-area {
         scroll-snap-align: start;
       }
 
-      .card-one {
+      .scroll-container,
+      .scroll-area {
+        margin: 0 auto;
+      }
+
+      .scroll-area {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .scroll-area:nth-of-type(1) {
         background: #49b293;
       }
 
-      .card-two {
+      .scroll-area:nth-of-type(2) {
         background: #c94e4b;
       }
 
-      .card-three {
+      .scroll-area:nth-of-type(3) {
         background: #4cc1be;
       }
 
-      .card-four {
+      .scroll-area:nth-of-type(4) {
         background: #8360a6;
       }
 
       .height {
         height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        background: #e0e0e0;
-        color: #333;
       }
     </style>
   </head>
@@ -65,89 +70,56 @@
     <section class="height">Section Before Scroll Container</section>
 
     <!-- Scroll Container -->
-    <div class="scroll-container" id="scrollContainer">
-      <div class="card card-one">1</div>
-      <div class="card card-two">2</div>
-      <div class="card card-three">3</div>
-      <div class="card card-four">4</div>
+    <div class="scroll-container">
+      <div class="scroll-area">1</div>
+      <div class="scroll-area">2</div>
+      <div class="scroll-area">3</div>
+      <div class="scroll-area">4</div>
     </div>
 
     <section class="height">Section After Scroll Container</section>
 
     <script>
-      // Create an IntersectionObserver instance
-      // Create an IntersectionObserver instance
-      let test = false;
-      const targetedSection = document.querySelector(".scroll-container");
-      let bodyScrollingEnabled = true;
-      console.log(bodyScrollingEnabled);
+      const scrollContainer = document.querySelector(".scroll-container");
 
-      // Intersection Observer
+      // Intersection Observer to handle the sticky behavior
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            // Check if the scroll container is 60% inside the viewport
-            if (
-              entry.isIntersecting &&
-              entry.boundingClientRect.top <= window.innerHeight * 0.6
-            ) {
-              console.log("Scroll container has entered 60% of the viewport!");
-              targetedSection.style.overflow = "scroll";
-              document.body.style.overflow = "hidden";
-              bodyScrollingEnabled = false;
-              console.log("later", bodyScrollingEnabled);
+            if (entry.isIntersecting) {
+              scrollContainer.style.overflow = "auto";
+              document.body.style.overflow = "hidden"; // Prevent body scrolling
             } else {
-              bodyScrollingEnabled = true;
-              console.log("else", bodyScrollingEnabled);
+              scrollContainer.style.overflow = "hidden";
+              document.body.style.overflow = "auto"; // Allow body scrolling
             }
           });
         },
         {
-          root: null, // Use the viewport as the root
-          threshold: 0, // Trigger when any part of the element is visible
-          rootMargin: "0px 0px -60% 0px", // Trigger when the top of the element reaches the top 60% of the viewport
+          root: null,
+          threshold: 0, // Trigger as soon as the element is visible
         }
       );
 
-      // Observe the scroll-container element
-      observer.observe(targetedSection);
+      // Observe the scroll container
+      observer.observe(scrollContainer);
 
-      // Track scroll events inside the targeted section
-      targetedSection.addEventListener("scroll", () => {
-        // If scroll reaches the bottom of the section, reset the scroll settings
+      // Handle scroll events within the scroll-container
+      scrollContainer.addEventListener("scroll", () => {
         if (
-          targetedSection.scrollHeight - targetedSection.scrollTop ===
-          targetedSection.clientHeight
+          scrollContainer.scrollHeight - scrollContainer.scrollTop ===
+          scrollContainer.clientHeight
         ) {
-          console.log("Reached the bottom of the targeted section!");
-
-          // Disable scroll for the section and enable scroll for the body
-          targetedSection.style.overflow = "hidden";
+          // Reached bottom
+          scrollContainer.style.overflow = "hidden";
           document.body.style.overflow = "auto";
-          bodyScrollingEnabled = true;
-          console.log("Body scroll enabled and section scroll disabled");
-          test = true;
-          console.log("test", test);
         }
-        if (targetedSection.scrollTop === 0) {
-          console.log("Reached the top of the targeted section!");
 
-          // Add any desired behavior for reaching the top here
-          targetedSection.style.overflow = "hidden";
+        if (scrollContainer.scrollTop === 0) {
+          // Reached top
+          scrollContainer.style.overflow = "hidden";
           document.body.style.overflow = "auto";
-          bodyScrollingEnabled = true;
-          console.log("Body scroll enabled and section scroll disabled");
         }
-      });
-
-      // Add a scroll event listener to handle scrolling behavior when section hits top or bottom
-      window.addEventListener("scroll", () => {
-        console.log("Scrolling...");
-
-        // Trigger the IntersectionObserver manually
-        document.querySelectorAll(".scroll-container").forEach((element) => {
-          observer.observe(element);
-        });
       });
     </script>
   </body>
