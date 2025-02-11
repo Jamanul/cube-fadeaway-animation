@@ -15,15 +15,15 @@
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
     <style>
+      .animated-text {
+        opacity: 0;
+      }
       body {
         padding: 0px;
         margin: 0px;
         background: #000;
         color: white;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
         flex-direction: column;
       }
       .reference-text {
@@ -34,7 +34,7 @@
       .hidden-word {
         opacity: 0;
         display: inline-block;
-        margin: 0 5px;
+        margin: 0 2px;
       }
       .hidden-char {
         opacity: 0;
@@ -189,7 +189,7 @@
         <div class="swiper-pagination"></div>
       </div>
     </section>
-    <h2 class="reference-text word-container" id="">
+    <h2 class="reference-text word-container-classbased" id="">
       Along the way, we encountered kindred spirits, fellow travelers with
       stories of their own. Conversations flowed like a symphony of voices, each
       melody adding a new layer to the tapestry of our journey.
@@ -222,10 +222,10 @@
           el: ".swiper-pagination",
           clickable: true,
         },
-        // autoplay: {
-        //   delay: 2000,
-        //   disableOnInteraction: false,
-        // },
+        autoplay: {
+          delay: 2000,
+          disableOnInteraction: false,
+        },
         on: {
           slideChangeTransitionEnd: function () {
             // Remove animation class from all slides
@@ -234,11 +234,17 @@
               .forEach((el) => {
                 el.classList.remove("word-container");
               });
+            document
+              .querySelectorAll(".mySwiper .animated-text")
+              .forEach((el) => {
+                el.style.opacity = "0";
+              });
 
             // Get the active slide
             let activeSlide = document.querySelector(".swiper-slide-active");
             if (activeSlide) {
               activeSlide.querySelectorAll(".animated-text").forEach((el) => {
+                el.style.opacity = "1";
                 el.classList.add("word-container");
                 console.log("hello");
                 const containers = document.querySelectorAll(".word-container");
@@ -246,7 +252,8 @@
                   const paragraph = container.innerText; // Get paragraph from HTML
                   container.innerHTML = ""; // Clear text content
 
-                  const words = paragraph.match(/\b\w+\b/g); // Extract words
+                  //   const words = paragraph.match(/\b\w+\b/g); // Extract words
+                  let words = paragraph.split(" ");
                   let totalDuration = 1000; // 1 second for all words
 
                   let wordElements = words.map((word) => {
@@ -293,12 +300,19 @@
       });
 
       document.addEventListener("DOMContentLoaded", function () {
+        document
+          .querySelectorAll(".mySwiper .swiper-slide-active .animated-text")
+          .forEach((el) => {
+            el.style.opacity = "1";
+          });
         const containers = document.querySelectorAll(".word-container");
         containers.forEach((container) => {
           const paragraph = container.innerText; // Get paragraph from HTML
           container.innerHTML = ""; // Clear text content
 
-          const words = paragraph.match(/\b\w+\b/g); // Extract words
+          //   const words = paragraph.match(/\b\w+\b/g); // Extract words
+          let words = paragraph.split(" ");
+
           let totalDuration = 1000; // 1 second for all words
 
           let wordElements = words.map((word) => {
@@ -338,49 +352,51 @@
         });
 
         // class based text animation
-        // const containers = document.querySelectorAll(".word-container");
-        // containers.forEach((container) => {
-        //   const paragraph = container.innerText; // Get paragraph from HTML
-        //   container.innerHTML = ""; // Clear text content
+        const containersTwo = document.querySelectorAll(
+          ".word-container-classbased"
+        );
+        containersTwo.forEach((container) => {
+          const paragraph = container.innerText; // Get paragraph from HTML
+          container.innerHTML = ""; // Clear text content
 
-        //   const words = paragraph.match(/\b\w+\b/g); // Extract words
-        //   let totalDuration = 1000; // 1 second for all words
+          let words = paragraph.split(" "); // Extract words
+          let totalDuration = 1000; // 1 second for all words
 
-        //   let wordElements = words.map((word) => {
-        //     let span = document.createElement("span");
-        //     span.classList.add("hidden-word");
-        //     span.dataset.word = word;
+          let wordElements = words.map((word) => {
+            let span = document.createElement("span");
+            span.classList.add("hidden-word");
+            span.dataset.word = word;
 
-        //     // Wrap each character in a span
-        //     span.innerHTML = word
-        //       .split("")
-        //       .map((letter) => `<span class='hidden-char'>${letter}</span>`)
-        //       .join("");
+            // Wrap each character in a span
+            span.innerHTML = word
+              .split("")
+              .map((letter) => `<span class='hidden-char'>${letter}</span>`)
+              .join("");
 
-        //     container.appendChild(span);
-        //     container.appendChild(document.createTextNode(" ")); // Add space
-        //     return span;
-        //   });
+            container.appendChild(span);
+            container.appendChild(document.createTextNode(" ")); // Add space
+            return span;
+          });
 
-        //   function revealWordsRandomly() {
-        //     wordElements.forEach((wordSpan, index) => {
-        //       let randomDelay = Math.random() * totalDuration; // Random delay between 0-1000ms
+          function revealWordsRandomly() {
+            wordElements.forEach((wordSpan, index) => {
+              let randomDelay = Math.random() * totalDuration; // Random delay between 0-1000ms
 
-        //       setTimeout(() => {
-        //         wordSpan.classList.add("show-word");
-        //         let chars = wordSpan.querySelectorAll(".hidden-char");
-        //         let mid = Math.floor(chars.length / 2);
+              setTimeout(() => {
+                wordSpan.classList.add("show-word");
+                let chars = wordSpan.querySelectorAll(".hidden-char");
+                let mid = Math.floor(chars.length / 2);
 
-        //         chars.forEach((char, i) => {
-        //           setTimeout(() => {
-        //             char.classList.add("show-char");
-        //           }, Math.abs(i - mid) * 50);
-        //         });
-        //       }, randomDelay);
-        //     });
-        //   }
-        //   setTimeout(revealWordsRandomly, 100);
-        // });
+                chars.forEach((char, i) => {
+                  setTimeout(() => {
+                    char.classList.add("show-char");
+                  }, Math.abs(i - mid) * 50);
+                });
+              }, randomDelay);
+            });
+          }
+          setTimeout(revealWordsRandomly, 100);
+        });
       });
     </script>
   </body>
