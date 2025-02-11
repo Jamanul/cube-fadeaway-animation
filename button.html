@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .button-primary {
+        padding: 18px 27px;
+        background-color: #f7ce2f;
+        border: none;
+        cursor: pointer;
+        font-weight: 500 !important;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+      }
+      .button-primary::before {
+        background: #c7a322;
+        content: "";
+        position: absolute;
+        top: var(--y);
+        left: var(--x);
+        transform: translate(-50%, -50%);
+        height: 0;
+        width: 0;
+        border-radius: 50%;
+        transition: width 0.5s, height 0.5s;
+      }
+      .button-primary:hover::before {
+        width: 500px;
+        height: 500px;
+      }
+
+      .search-button {
+        position: relative;
+        display: inline-flex;
+        padding: 14px 28px;
+        border-radius: 32px;
+        border: 2px solid #f2bd57;
+        background: rgba(0, 0, 0, 0.4);
+        gap: 8px;
+        color: #fff;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .search-button::before {
+        content: "";
+        position: absolute;
+        top: var(--y);
+        left: var(--x);
+        transform: translate(-50%, -50%);
+        height: 0;
+        width: 0;
+        border-radius: 50%;
+        background: #f2bd57;
+        transition: width 0.5s, height 0.5s;
+      }
+      .search-button:hover::before {
+        width: 300px;
+        height: 300px;
+      }
+      .wm-z-100 {
+        position: relative;
+        z-index: 100;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="hero-button text-lg primary-bg text-center">See Menu</button>
+    <button class="button-primary wm-text-black">
+      <span class="wm-text-sm wm-font-500 wm-z-100">VIAC O PONUKE</span>
+    </button>
+    <button class="flex btn search-button text-lg primary-bg text-center">
+      <span class="relative z-100"> Search</span>
+    </button>
+    <script>
+      const btns = document.querySelectorAll(".button-primary"); // Match the correct class name
+
+      if (btns) {
+        btns.forEach((btn) => {
+          btn.addEventListener("mousemove", function (e) {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            btn.style.setProperty("--x", x + "px");
+            btn.style.setProperty("--y", y + "px");
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
