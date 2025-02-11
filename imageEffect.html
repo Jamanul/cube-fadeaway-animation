@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wave Effect</title>
+    <style>
+      body {
+        height: 95vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+      }
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+      .image-container {
+        width: 500px;
+        cursor: pointer;
+        font-weight: 500 !important;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Wave Effect */
+      .image-container::before {
+        content: "";
+        position: absolute;
+        top: var(--y);
+        left: var(--x);
+        transform: translate(-50%, -50%);
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(13, 93, 53, 0.5) 0%,
+          rgba(13, 93, 53, 0) 80%
+        );
+        transition: width 0.5s ease-out, height 0.5s ease-out;
+        opacity: 0.8;
+        animation: waveEffect 1s ease-out;
+      }
+
+      /* Animation to create a wave-like effect */
+      @keyframes waveEffect {
+        0% {
+          width: 50px;
+          height: 50px;
+          opacity: 0.8;
+        }
+        50% {
+          width: 300px;
+          height: 300px;
+          opacity: 0.4;
+        }
+        100% {
+          width: 1500px;
+          height: 1500px;
+          opacity: 0;
+        }
+      }
+      .image-container:hover::before {
+        width: 500px;
+        height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="image-container">
+      <img src="./images/1.jpg" alt="Sample Image" />
+    </div>
+    <script>
+      const btns = document.querySelectorAll(".image-container");
+
+      if (btns) {
+        btns.forEach((btn) => {
+          btn.addEventListener("mousemove", function (e) {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            btn.style.setProperty("--x", x + "px");
+            btn.style.setProperty("--y", y + "px");
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
