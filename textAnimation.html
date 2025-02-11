@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Word Reveal Animation</title>
+    <style>
+      body {
+        padding: 0px;
+        margin: 0px;
+        background: #000;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 95vh;
+        text-align: center;
+      }
+      .reference-text {
+        font-size: 40px;
+        max-width: 600px;
+        word-wrap: break-word;
+      }
+      .hidden-word {
+        opacity: 0;
+        display: inline-block;
+        margin: 0 5px;
+      }
+      .hidden-char {
+        opacity: 0;
+        display: inline-block;
+      }
+      .show-word {
+        opacity: 1;
+        transition: opacity 0.3s;
+      }
+      .show-char {
+        opacity: 1;
+        transition: opacity 0.15s;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 class="reference-text" id="word-container">
+      Along the way, we encountered kindred spirits, fellow travelers with
+      stories of their own. Conversations flowed like a symphony of voices, each
+      melody adding a new layer to the tapestry of our journey.
+    </h2>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const container = document.getElementById("word-container");
+        const paragraph = container.innerText; // Get paragraph from HTML
+        container.innerHTML = ""; // Clear text content
+
+        const words = paragraph.match(/\b\w+\b/g); // Extract words
+        let totalDuration = 1000; // 1 second for all words
+        let intervalTime = totalDuration / words.length; // Evenly distribute within 1 second
+
+        let wordElements = words.map((word) => {
+          let span = document.createElement("span");
+          span.classList.add("hidden-word");
+          span.dataset.word = word;
+
+          // Wrap each character in a span
+          span.innerHTML = word
+            .split("")
+            .map((letter) => `<span class='hidden-char'>${letter}</span>`)
+            .join("");
+
+          container.appendChild(span);
+          container.appendChild(document.createTextNode(" ")); // Add space
+          return span;
+        });
+
+        function revealWord() {
+          if (wordElements.length === 0) return;
+
+          let randomIndex = Math.floor(Math.random() * wordElements.length);
+          let selectedWord = wordElements[randomIndex];
+          wordElements.splice(randomIndex, 1); // Remove from array
+
+          selectedWord.classList.add("show-word");
+          let chars = selectedWord.querySelectorAll(".hidden-char");
+          let mid = Math.floor(chars.length / 2);
+
+          chars.forEach((char, i) => {
+            setTimeout(() => {
+              char.classList.add("show-char");
+            }, Math.abs(i - mid) * 50);
+          });
+
+          if (wordElements.length > 0) {
+            setTimeout(revealWord, intervalTime);
+          }
+        }
+        setTimeout(revealWord, 100);
+      });
+    </script>
+  </body>
+</html>
