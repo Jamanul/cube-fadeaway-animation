@@ -4,6 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Random Word Reveal Animation</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
     <style>
       body {
         padding: 0px;
@@ -13,8 +23,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 95vh;
         text-align: center;
+        flex-direction: column;
       }
       .reference-text {
         font-size: 40px;
@@ -32,69 +42,345 @@
       }
       .show-word {
         opacity: 1;
-        transition: opacity 0.3s;
+        transition: opacity 0.9s;
       }
       .show-char {
         opacity: 1;
-        transition: opacity 0.15s;
+        transition: opacity 0.45s;
+      }
+      /*  */
+      .hero-swiper-container {
+        max-width: 1310px !important;
+        margin: 0px auto !important;
+        padding: 70px 0px !important;
+        /* height: 1052px !important; */
+      }
+      .swiper {
+        width: 100%;
+        height: 100%;
+      }
+      .hero-slider-dsc {
+        max-width: 780px !important;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .hero-swiper-overlay-one {
+        background: rgba(13, 93, 53, 0.6);
+        mix-blend-mode: color;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .hero-swiper-overlay {
+        background: rgba(13, 93, 53, 0.8);
+        mix-blend-mode: color;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .swiper {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .swiper-pagination-bullet {
+        width: 13px !important;
+        height: 13px !important;
+        background: var(--light-gray) !important;
+        display: inline-block !important;
+        margin-right: 5px !important;
+        cursor: pointer !important;
+        transition: background 0.3s !important;
+        border-radius: 0px !important;
+        opacity: 1 !important;
+      }
+      .swiper-pagination-bullet-active {
+        background: var(--primary-color) !important;
       }
     </style>
   </head>
   <body>
-    <h2 class="reference-text" id="word-container">
+    <section>
+      <div class="swiper mySwiper hero-swiper-container">
+        <div class="swiper-wrapper">
+          <div
+            class="swiper-slide swiper-hero-card d-flex flex-column justify-content-between"
+          >
+            <div class="row justify-content-end container">
+              <div
+                class="d-flex flex-column wm-gap-32 col-12 col-md-11 responsive-p-0"
+              >
+                <h1
+                  class="wm-heading-2 word-container animated-text wm-text-black pb-1"
+                >
+                  Čistá energia a úspory
+                </h1>
+                <p
+                  class="wm-text-black word-container animated-text wm-text-xl hero-slider-dsc"
+                >
+                  Dokážeme priniesť iný pohľad na efektívne využívanie energií a
+                  úsporné zaobchádzanie s nimi pre firmy, obce a organizácie
+                  vrátane nájdenia optimálneho spôsobu financovania, ktoré vám
+                  prinesie úspory. Postaráme sa o celkovú realizáciu aj následnú
+                  údržbu a servis.
+                </p>
+                <div>
+                  <button class="button-primary wm-text-black">
+                    <span class="wm-text-sm wm-font-500 wm-z-100"
+                      >VIAC O PONUKE</span
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="wm-relative hero-slide-image-container">
+              <img
+                class="hero-slider-img"
+                src="https://escoslovensko.webermelon.dev/wp-content/uploads/2025/02/shutterstock_2042204567-1.png"
+                alt="nature"
+              />
+              <div class="hero-swiper-overlay-one wm-absolute"></div>
+            </div>
+          </div>
+          <div
+            class="swiper-slide swiper-hero-card d-flex flex-column justify-content-between"
+          >
+            <div class="row justify-content-end container">
+              <div
+                class="d-flex flex-column wm-gap-32 col-12 col-md-11 responsive-p-0"
+              >
+                <h1 class="wm-heading-2 animated-text wm-text-black pb-1">
+                  GES – Garantované energetické služby
+                </h1>
+                <p
+                  class="wm-text-black animated-text wm-text-xl hero-slider-dsc"
+                >
+                  Garantovanú energetickú službu (GES), známu aj pod anglickou
+                  skratkou EPC (Energy Performance Contracting), spravidla
+                  poskytujú tzv. ESCO spoločnosti. Cieľom GES je v prvom rade
+                  znížiť spotrebu energie v budovách, a tým klientovi usporiť
+                  financie.
+                </p>
+                <div>
+                  <button class="button-primary wm-text-black">
+                    <span class="wm-text-sm wm-font-500 wm-z-100"
+                      >VIAC O PONUKE</span
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="wm-relative hero-slide-image-container">
+              <img
+                class="hero-slider-img"
+                src="https://escoslovensko.webermelon.dev/wp-content/uploads/2025/02/shutterstock_1712387749-1.png"
+                alt="nature"
+              />
+              <div class="hero-swiper-overlay-one wm-absolute"></div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+    <h2 class="reference-text word-container" id="">
       Along the way, we encountered kindred spirits, fellow travelers with
       stories of their own. Conversations flowed like a symphony of voices, each
       melody adding a new layer to the tapestry of our journey.
     </h2>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
+      //   var swiper = new Swiper(".mySwiper", {
+      //     slidesPerView: 1,
+      //     spaceBetween: 30,
+      //     loop: true,
+      //     pagination: {
+      //       el: ".swiper-pagination",
+      //       clickable: true,
+      //     },
+      //     // autoplay: {
+      //     //   delay: 2000,
+      //     //   disableOnInteraction: false,
+      //     // },
+      //   });
+      var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        // autoplay: {
+        //   delay: 2000,
+        //   disableOnInteraction: false,
+        // },
+        on: {
+          slideChangeTransitionEnd: function () {
+            // Remove animation class from all slides
+            document
+              .querySelectorAll(".mySwiper .word-container")
+              .forEach((el) => {
+                el.classList.remove("word-container");
+              });
+
+            // Get the active slide
+            let activeSlide = document.querySelector(".swiper-slide-active");
+            if (activeSlide) {
+              activeSlide.querySelectorAll(".animated-text").forEach((el) => {
+                el.classList.add("word-container");
+                console.log("hello");
+                const containers = document.querySelectorAll(".word-container");
+                containers.forEach((container) => {
+                  const paragraph = container.innerText; // Get paragraph from HTML
+                  container.innerHTML = ""; // Clear text content
+
+                  const words = paragraph.match(/\b\w+\b/g); // Extract words
+                  let totalDuration = 1000; // 1 second for all words
+
+                  let wordElements = words.map((word) => {
+                    let span = document.createElement("span");
+                    span.classList.add("hidden-word");
+                    span.dataset.word = word;
+
+                    // Wrap each character in a span
+                    span.innerHTML = word
+                      .split("")
+                      .map(
+                        (letter) => `<span class='hidden-char'>${letter}</span>`
+                      )
+                      .join("");
+
+                    container.appendChild(span);
+                    container.appendChild(document.createTextNode(" ")); // Add space
+                    return span;
+                  });
+
+                  function revealWordsRandomly() {
+                    wordElements.forEach((wordSpan, index) => {
+                      let randomDelay = Math.random() * totalDuration; // Random delay between 0-1000ms
+
+                      setTimeout(() => {
+                        wordSpan.classList.add("show-word");
+                        let chars = wordSpan.querySelectorAll(".hidden-char");
+                        let mid = Math.floor(chars.length / 2);
+
+                        chars.forEach((char, i) => {
+                          setTimeout(() => {
+                            char.classList.add("show-char");
+                          }, Math.abs(i - mid) * 50);
+                        });
+                      }, randomDelay);
+                    });
+                  }
+                  setTimeout(revealWordsRandomly, 100);
+                });
+              });
+            }
+          },
+        },
+      });
+
       document.addEventListener("DOMContentLoaded", function () {
-        const container = document.getElementById("word-container");
-        const paragraph = container.innerText; // Get paragraph from HTML
-        container.innerHTML = ""; // Clear text content
+        const containers = document.querySelectorAll(".word-container");
+        containers.forEach((container) => {
+          const paragraph = container.innerText; // Get paragraph from HTML
+          container.innerHTML = ""; // Clear text content
 
-        const words = paragraph.match(/\b\w+\b/g); // Extract words
-        let totalDuration = 1000; // 1 second for all words
-        let intervalTime = totalDuration / words.length; // Evenly distribute within 1 second
+          const words = paragraph.match(/\b\w+\b/g); // Extract words
+          let totalDuration = 1000; // 1 second for all words
 
-        let wordElements = words.map((word) => {
-          let span = document.createElement("span");
-          span.classList.add("hidden-word");
-          span.dataset.word = word;
+          let wordElements = words.map((word) => {
+            let span = document.createElement("span");
+            span.classList.add("hidden-word");
+            span.dataset.word = word;
 
-          // Wrap each character in a span
-          span.innerHTML = word
-            .split("")
-            .map((letter) => `<span class='hidden-char'>${letter}</span>`)
-            .join("");
+            // Wrap each character in a span
+            span.innerHTML = word
+              .split("")
+              .map((letter) => `<span class='hidden-char'>${letter}</span>`)
+              .join("");
 
-          container.appendChild(span);
-          container.appendChild(document.createTextNode(" ")); // Add space
-          return span;
-        });
-
-        function revealWord() {
-          if (wordElements.length === 0) return;
-
-          let randomIndex = Math.floor(Math.random() * wordElements.length);
-          let selectedWord = wordElements[randomIndex];
-          wordElements.splice(randomIndex, 1); // Remove from array
-
-          selectedWord.classList.add("show-word");
-          let chars = selectedWord.querySelectorAll(".hidden-char");
-          let mid = Math.floor(chars.length / 2);
-
-          chars.forEach((char, i) => {
-            setTimeout(() => {
-              char.classList.add("show-char");
-            }, Math.abs(i - mid) * 50);
+            container.appendChild(span);
+            container.appendChild(document.createTextNode(" ")); // Add space
+            return span;
           });
 
-          if (wordElements.length > 0) {
-            setTimeout(revealWord, intervalTime);
+          function revealWordsRandomly() {
+            wordElements.forEach((wordSpan, index) => {
+              let randomDelay = Math.random() * totalDuration; // Random delay between 0-1000ms
+
+              setTimeout(() => {
+                wordSpan.classList.add("show-word");
+                let chars = wordSpan.querySelectorAll(".hidden-char");
+                let mid = Math.floor(chars.length / 2);
+
+                chars.forEach((char, i) => {
+                  setTimeout(() => {
+                    char.classList.add("show-char");
+                  }, Math.abs(i - mid) * 50);
+                });
+              }, randomDelay);
+            });
           }
-        }
-        setTimeout(revealWord, 100);
+          setTimeout(revealWordsRandomly, 100);
+        });
+
+        // class based text animation
+        // const containers = document.querySelectorAll(".word-container");
+        // containers.forEach((container) => {
+        //   const paragraph = container.innerText; // Get paragraph from HTML
+        //   container.innerHTML = ""; // Clear text content
+
+        //   const words = paragraph.match(/\b\w+\b/g); // Extract words
+        //   let totalDuration = 1000; // 1 second for all words
+
+        //   let wordElements = words.map((word) => {
+        //     let span = document.createElement("span");
+        //     span.classList.add("hidden-word");
+        //     span.dataset.word = word;
+
+        //     // Wrap each character in a span
+        //     span.innerHTML = word
+        //       .split("")
+        //       .map((letter) => `<span class='hidden-char'>${letter}</span>`)
+        //       .join("");
+
+        //     container.appendChild(span);
+        //     container.appendChild(document.createTextNode(" ")); // Add space
+        //     return span;
+        //   });
+
+        //   function revealWordsRandomly() {
+        //     wordElements.forEach((wordSpan, index) => {
+        //       let randomDelay = Math.random() * totalDuration; // Random delay between 0-1000ms
+
+        //       setTimeout(() => {
+        //         wordSpan.classList.add("show-word");
+        //         let chars = wordSpan.querySelectorAll(".hidden-char");
+        //         let mid = Math.floor(chars.length / 2);
+
+        //         chars.forEach((char, i) => {
+        //           setTimeout(() => {
+        //             char.classList.add("show-char");
+        //           }, Math.abs(i - mid) * 50);
+        //         });
+        //       }, randomDelay);
+        //     });
+        //   }
+        //   setTimeout(revealWordsRandomly, 100);
+        // });
       });
     </script>
   </body>
