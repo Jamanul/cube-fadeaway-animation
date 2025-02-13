@@ -41,31 +41,27 @@
           rgba(13, 93, 53, 0) 80%
         );
         transition: width 0.5s ease-out, height 0.5s ease-out;
-        opacity: 0.8;
-        animation: waveEffect 1s ease-out;
       }
 
       /* Animation to create a wave-like effect */
-      @keyframes waveEffect {
+      /* @keyframes waveEffect {
         0% {
-          width: 50px;
-          height: 50px;
-          opacity: 0.8;
+          width: 10px;
+          height: 10px;
+          opacity: 1;
         }
-        50% {
-          width: 300px;
-          height: 300px;
-          opacity: 0.4;
-        }
+
         100% {
           width: 1500px;
           height: 1500px;
-          opacity: 0;
+          opacity: 0.8;
         }
-      }
+      } */
       .image-container:hover::before {
-        width: 500px;
-        height: 500px;
+        width: 1500px;
+        height: 1500px;
+        transition: width 0.5s ease-out, height 0.5s ease-out;
+        animation: waveEffect 1s ease-out;
       }
     </style>
   </head>
