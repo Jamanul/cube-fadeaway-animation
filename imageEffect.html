@@ -38,30 +38,55 @@
         background: radial-gradient(
           circle,
           rgba(13, 93, 53, 0.5) 0%,
-          rgba(13, 93, 53, 0) 80%
+          rgba(13, 93, 53, 0) 100%
         );
         transition: width 0.5s ease-out, height 0.5s ease-out;
       }
 
-      /* Animation to create a wave-like effect */
-      /* @keyframes waveEffect {
-        0% {
-          width: 10px;
-          height: 10px;
-          opacity: 1;
-        }
-
-        100% {
-          width: 1500px;
-          height: 1500px;
-          opacity: 0.8;
-        }
-      } */
       .image-container:hover::before {
         width: 1500px;
         height: 1500px;
         transition: width 0.5s ease-out, height 0.5s ease-out;
         animation: waveEffect 1s ease-out;
+      }
+      .image-layer-container {
+        width: 500px;
+        cursor: pointer;
+        font-weight: 500 !important;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Wave Effect */
+      .image-layer-container::before {
+        content: "";
+        position: absolute;
+        top: var(--y);
+        left: var(--x);
+        transform: translate(-50%, -50%);
+        width: 1500px;
+        height: 1500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(13, 93, 53, 0.5) 0%,
+          rgba(13, 93, 53, 0) 100%
+        );
+        transition: width 0.5s ease-out, height 0.5s ease-out;
+      }
+
+      .image-layer-container:hover::before {
+        width: 0px;
+        height: 0px;
+        transition: width 0.5s ease-out, height 0.5s ease-out;
+        animation: waveEffect 1s ease-out;
+      }
+      .wm-relative {
+        position: relative;
+      }
+      .wm-absolute {
+        position: absolute;
       }
     </style>
   </head>
@@ -69,9 +94,31 @@
     <div class="image-container">
       <img src="./images/1.jpg" alt="Sample Image" />
     </div>
-    <script>
-      const btns = document.querySelectorAll(".image-container");
+    <div class="wm-relative image-layer-container">
+      <a href="#3">
+        <img
+          class="product-slider-img"
+          src="https://escoslovensko.webermelon.dev/wp-content/uploads/2025/02/11-scaled.jpg"
+          alt="nature"
+        />
+      </a>
+    </div>
 
+    <script>
+      const btnsFadeout = document.querySelectorAll(".image-layer-container");
+
+      if (btnsFadeout) {
+        btnsFadeout.forEach((btn) => {
+          btn.addEventListener("mousemove", function (e) {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            btn.style.setProperty("--x", x + "px");
+            btn.style.setProperty("--y", y + "px");
+          });
+        });
+      }
+      const btns = document.querySelectorAll(".image-container");
       if (btns) {
         btns.forEach((btn) => {
           btn.addEventListener("mousemove", function (e) {
