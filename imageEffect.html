@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wave Effect</title>
+
     <style>
       body {
         height: 95vh;
@@ -15,18 +16,16 @@
       img {
         width: 100%;
         object-fit: cover;
+        height: 200px;
       }
-      .image-container {
-        width: 500px;
-        cursor: pointer;
-        font-weight: 500 !important;
+      .product-slider-active-container {
         overflow: hidden;
         position: relative;
         z-index: 1;
       }
 
       /* Wave Effect */
-      .image-container::before {
+      .product-slider-active-container::before {
         content: "";
         position: absolute;
         top: var(--y);
@@ -37,46 +36,46 @@
         border-radius: 50%;
         background: radial-gradient(
           circle,
-          rgba(13, 93, 53, 0.5) 0%,
-          rgba(13, 93, 53, 0) 100%
+          rgba(13, 93, 53, 0.6) 0%,
+          rgba(13, 93, 53, 0.6) 50%,
+          rgba(13, 93, 53, 0.6) 100%
         );
+        mix-blend-mode: color;
         transition: width 0.5s ease-out, height 0.5s ease-out;
       }
-
-      .image-container:hover::before {
+      .product-slider-active-container:hover::before {
         width: 1500px;
         height: 1500px;
         transition: width 0.5s ease-out, height 0.5s ease-out;
         animation: waveEffect 1s ease-out;
       }
-      .image-layer-container {
-        width: 500px;
-        cursor: pointer;
-        font-weight: 500 !important;
+      .product-slider-inactive-container {
         overflow: hidden;
         position: relative;
         z-index: 1;
       }
 
       /* Wave Effect */
-      .image-layer-container::before {
+      .product-slider-inactive-container::before {
         content: "";
         position: absolute;
         top: var(--y);
         left: var(--x);
         transform: translate(-50%, -50%);
+        mix-blend-mode: color;
         width: 1500px;
         height: 1500px;
         border-radius: 50%;
         background: radial-gradient(
           circle,
-          rgba(13, 93, 53, 0.5) 0%,
-          rgba(13, 93, 53, 0) 100%
+          rgba(13, 93, 53, 0.6) 0%,
+          rgba(13, 93, 53, 0.6) 50%,
+          rgba(13, 93, 53, 0.6) 100%
         );
         transition: width 0.5s ease-out, height 0.5s ease-out;
       }
 
-      .image-layer-container:hover::before {
+      .product-slider-inactive-container:hover::before {
         width: 0px;
         height: 0px;
         transition: width 0.5s ease-out, height 0.5s ease-out;
@@ -91,10 +90,10 @@
     </style>
   </head>
   <body>
-    <div class="image-container">
+    <div class="product-slider-active-container">
       <img src="./images/1.jpg" alt="Sample Image" />
     </div>
-    <div class="wm-relative image-layer-container">
+    <div class="wm-relative product-slider-inactive-container">
       <a href="#3">
         <img
           class="product-slider-img"
@@ -105,8 +104,9 @@
     </div>
 
     <script>
-      const btnsFadeout = document.querySelectorAll(".image-layer-container");
-
+      const btnsFadeout = document.querySelectorAll(
+        ".product-slider-inactive-container"
+      );
       if (btnsFadeout) {
         btnsFadeout.forEach((btn) => {
           btn.addEventListener("mousemove", function (e) {
@@ -118,9 +118,11 @@
           });
         });
       }
-      const btns = document.querySelectorAll(".image-container");
-      if (btns) {
-        btns.forEach((btn) => {
+      const productSliderActive = document.querySelectorAll(
+        ".product-slider-active-container"
+      );
+      if (productSliderActive) {
+        productSliderActive.forEach((btn) => {
           btn.addEventListener("mousemove", function (e) {
             const rect = btn.getBoundingClientRect();
             const x = e.clientX - rect.left;

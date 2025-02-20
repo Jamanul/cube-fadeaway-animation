@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* Make sure the body takes up the full height of the page */
+      body {
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+      }
+
+      /* Styling for the button */
+      button {
+        padding: 20px 30px;
+        font-size: 28px;
+        cursor: pointer;
+        border: none;
+        background-color: #4caf50;
+        color: white;
+        white-space: nowrap; /* Prevent the text from wrapping */
+        min-width: 200px; /* Set a minimum width so the button doesn't shrink too small */
+        text-align: center;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn">Click Me</button>
+
+    <script>
+      const button = document.getElementById("btn");
+      const originalText = button.textContent; // Save the original text
+      const alphabet = "abcdefghijklmnopqrstuvwxyz"; // Alphabet for cycling
+
+      // Function to loop through characters from A to Z for each character in the original text
+      function loopText() {
+        let charIndex = 0; // Keep track of which character we're looping through
+        let loopedText = Array.from(originalText); // Convert original text into an array
+
+        function changeCharacter() {
+          if (charIndex < originalText.length) {
+            let currentChar = loopedText[charIndex];
+            let isUpperCase = currentChar === currentChar.toUpperCase(); // Check if it's uppercase
+            let currentCharLower = currentChar.toLowerCase(); // Convert to lowercase for cycling
+            let index = 0;
+
+            // Skip whitespace characters
+            if (currentChar === " ") {
+              charIndex++; // Move to the next character if it's a space
+              changeCharacter(); // Call the function again to continue the loop
+              return;
+            }
+
+            const charInterval = setInterval(() => {
+              // If the character from alphabet matches the original character, stop
+              if (alphabet[index] === currentCharLower) {
+                // Restore the character's case (uppercase if it was originally uppercase)
+                loopedText[charIndex] = isUpperCase
+                  ? currentCharLower.toUpperCase()
+                  : currentCharLower;
+                button.textContent = loopedText.join(""); // Update the text content with only the current character
+                clearInterval(charInterval); // Stop this character's loop
+                charIndex++; // Move to the next character
+                if (charIndex < originalText.length) {
+                  changeCharacter(); // Continue to the next character
+                }
+              } else {
+                loopedText[charIndex] = alphabet[index]; // Change the current character
+                button.textContent = loopedText.join(""); // Update the text content
+                index++;
+                if (index >= alphabet.length) {
+                  index = 0; // Loop back to 'a' if we reach 'z'
+                }
+              }
+            }, 50); // Adjust the interval speed here (50ms for quicker transition)
+          }
+        }
+
+        changeCharacter(); // Start looping through characters
+      }
+
+      // Start the animation when the button is clicked
+      button.addEventListener("click", loopText);
+    </script>
+  </body>
+</html>
